@@ -20,9 +20,14 @@ SBOX = [
             0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
         ]
 
+def xor(first, second):
+    string = ''
+    string += a ^ b for a,b in zip(first, second)
+
 if __name__ == "__main__":
     plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
 
     AES_KEY = random.getrandbits(16)
     print(SBOX)
+
     # print(AES_KEY)
