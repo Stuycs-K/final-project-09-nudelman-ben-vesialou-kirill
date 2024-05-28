@@ -10,6 +10,10 @@ Completed initialization of variables for aes encryption and began to write help
 
 Mostly researched the specific functions of each round of AES as well as the implementation of the network layer in python. Began putting it into code.
 
+### 5/28
+
+Completed client and server setup of the network connections, tested and debugged the functions.
+
 
 ## Kirill Vesialou
 

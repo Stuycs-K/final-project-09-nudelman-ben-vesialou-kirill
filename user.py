@@ -28,7 +28,7 @@ def client_setup(IP):
     print ("Socket created")
 
     s.connect((IP, port))
-    print ("connected to %s on port %s" %(IP) %(port))
+    print ("connected to %s" %(IP))
 
     return s
 
@@ -42,17 +42,16 @@ if __name__ == "__main__":
         file_path = sys.argv[2]
         server_ip = sys.argv[3]
 
-        client_socket = client_setup()
+        client_socket = client_setup(server_ip)
         
         #now the client has to recieve information
 
         # close the connection after all the information is sent
         client_socket.close()
         
-    else if (sys.argv[1] == "-RECIEVE"):
-        while !(SENT):
-            server_socket = server_setup()
-
+    elif (sys.argv[1] == "-RECIEVE"):
+        server_socket = server_setup()
+        while (not SENT):
             # establish connection when client connects
             client, address = server_socket.accept()
             print ('established connection from', address )
