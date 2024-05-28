@@ -21,8 +21,8 @@ SBOX = [
         ]
 
 def xor(first, second):
-    string = ''
-    string = tuple(a ^ b) for a,b in zip(first, second)
+    encoded = bytes(a ^ b for a,b in zip(inp, key))
+    return encoded
 
 if __name__ == "__main__":
     plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
