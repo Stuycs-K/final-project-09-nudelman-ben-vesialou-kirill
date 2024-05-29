@@ -1,25 +1,6 @@
 import numpy as np
 import random
 
-# Splits the file into blocks with 128 bits. Pads the file with 0s if it the number of bytes isn't a multipl of 16.
-def split_file(file):
-    blocks =[]
-    with open(file, 'rb') as f:
-        data = f.read()
-
-    # Pads the file contents with 0s so that it can be split up into 16 byte sections
-    numOfPaddingBytes = 16 - (len(data) % 16)
-    for i in range (numOfPaddingBytes):
-        data += b'\x00'
-
-    # Splits the data into 16 byte sections and appends them to blocks
-    i = 0
-    while(i < len(data)):
-        blocks.append(data[i:i + 16])
-        i += 16
-    
-    return blocks
-
 SBOX = [
             0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
             0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
@@ -38,6 +19,25 @@ SBOX = [
             0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
             0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
         ]
+        
+# Splits the file into blocks with 128 bits. Pads the file with 0s if it the number of bytes isn't a multipl of 16.
+def split_file(file):
+    blocks =[]
+    with open(file, 'rb') as f:
+        data = f.read()
+
+    # Pads the file contents with 0s so that it can be split up into 16 byte sections
+    numOfPaddingBytes = 16 - (len(data) % 16)
+    for i in range (numOfPaddingBytes):
+        data += b'\x00'
+
+    # Splits the data into 16 byte sections and appends them to blocks
+    i = 0
+    while(i < len(data)):
+        blocks.append(data[i:i + 16])
+        i += 16
+    
+    return blocks
 
 def xor(first, second):
     encoded = bytes(a ^ b for a,b in zip(inp, key))
