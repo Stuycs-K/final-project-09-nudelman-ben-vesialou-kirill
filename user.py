@@ -1,6 +1,7 @@
 import sys
 import socket
 import random
+import aes
 
 port = 23451
 
@@ -45,8 +46,11 @@ if __name__ == "__main__":
         client_socket = client_setup(server_ip)
         
         #now the client has to recieve information
+        #send some information here
+        
 
         # close the connection after all the information is sent
+        SENT = True
         client_socket.close()
         
     elif (sys.argv[1] == "-RECIEVE"):

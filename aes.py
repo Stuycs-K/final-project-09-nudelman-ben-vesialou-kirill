@@ -43,3 +43,15 @@ def xor(first, second):
     encoded = bytes(a ^ b for a,b in zip(inp, key))
     return encoded
 
+def toMatrix(string):
+    arr = []
+    while string:
+        arr.append(string[:1])
+        string = string[1:]
+    # print(arr)
+    matrix = np.array(arr).reshape((4,4)).T
+    # print(matrix)
+    return matrix
+
+input = "thisissixteencha"
+toMatrix(input)
