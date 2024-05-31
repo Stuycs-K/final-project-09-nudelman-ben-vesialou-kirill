@@ -40,7 +40,7 @@ def split_file(file):
     return blocks
 
 def xor(first, second):
-    encoded = bytes(a ^ b for a,b in zip(inp, key))
+    encoded = bytes(a ^ b for a,b in zip(first, second))
     return encoded
 
 def toMatrix(string):
@@ -53,5 +53,20 @@ def toMatrix(string):
     # print(matrix)
     return matrix
 
-input = "thisissixteencha"
-toMatrix(input)
+def bytesubstitution(state):
+    newbytes = b''
+    for i, k in enumerate(state):
+        print(i)
+        newbytes += SBOX[k].to_bytes(1, byteorder = "little")
+    return state
+
+inp = str.encode('thisissixteencha')
+print(inp)
+AES_KEY = random.getrandbits(128).to_bytes(16, byteorder = "little")
+print(AES_KEY)
+round_key = xor(inp, AES_KEY)
+aftersub = bytesubstitution(round_key)
+state = toMatrix(aftersub)
+# print(state[0][0])
+print(state)
+
