@@ -43,3 +43,20 @@ def xor(first, second):
     encoded = bytes(a ^ b for a,b in zip(inp, key))
     return encoded
 
+testMatrix = [[0,1,2,3],[0,1,2,3],[0,1,2,3],[0,1,2,3]]
+
+def rowShift(matrix):
+    index = 1
+    while index < 4:
+        matrix[index] = matrix[index][index:] + matrix[index][:index]
+        index += 1
+    return matrix
+
+print(rowShift(testMatrix))
+
+def mixColumns(matrix):
+    operationMatrix = np.array([[0x02, 0x03, 0x01, 0x01],[0x01,0x02,0x03,0x01],[0x01,0x01,0x02,0x03],[0x03,0x01,0x01,0x02]]).reshape(4,4)
+    output = operationMatrix @ matrix
+    return output
+
+print(mixColumns(testMatrix))
