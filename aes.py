@@ -60,3 +60,41 @@ def mixColumns(matrix):
     return output
 
 print(mixColumns(testMatrix))
+
+testWord = 0x4D + 0x3F + 0x03 + 0x10
+
+def RC(roundNum):
+    if roundNum == 0:
+        return 0x01
+    else:
+        return 0x02 * RC(roundNum - 1)
+
+def g(word, roundNum):
+
+    # step 1
+    word = word[1:] + word[0]
+
+    # step 2
+    newBytes = b''
+    for i, k in word:
+        newBytes += SBOX[k].tobytes(1, byteorder = "little")
+    
+    # step 3
+    roundConst = b''
+    roundConst += RC(roundNum) + 0x00 + 0x00 + 0x00
+    word = xor(newBytes, roundConst)
+
+    return word
+
+
+def keyExpansion(words):
+    w1 = xor(words[0], g(words[3]))
+    w2 = xor(w1, words[1])
+    w3 = xor(w2, words[2])
+    w4 = xor(w3, words[3])
+    newKey = b''
+    newKey += w1 + w2 + w3 + w4
+    
+    return newKey
+
+print(keyExpansion(testWord))
