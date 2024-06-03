@@ -22,9 +22,11 @@ Fixed xor function and added function to convert byte string into matrix for fur
 
 Added round key and byte substitution steps of one round of AES.
 
-### 5/31
+### 5/31 and Weekend
 
-Added more testing for byte substitution, 
+Added more testing for byte substitution and revised byte substitution to work with matrices and bytes. Researched final step of each round of AES.
+
+### 6/3
 
 
 ## Kirill Vesialou

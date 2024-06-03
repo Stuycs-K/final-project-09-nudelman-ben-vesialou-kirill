@@ -56,9 +56,14 @@ def toMatrix(string):
 def bytesubstitution(state):
     newbytes = b''
     for i, k in enumerate(state):
-        print(i)
         newbytes += SBOX[k].to_bytes(1, byteorder = "little")
     return state
+
+def key_to_words(key):
+    word_arr = []
+    for i in range(4):
+        word_arr.append(key[4*i : 4*(i+1)])
+    return word_arr
 
 inp = str.encode('thisissixteencha')
 print(inp)
@@ -69,4 +74,6 @@ aftersub = bytesubstitution(round_key)
 state = toMatrix(aftersub)
 # print(state[0][0])
 print(state)
+print(round_key)
+key_to_words(round_key)
 
