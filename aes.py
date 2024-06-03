@@ -19,6 +19,8 @@ SBOX = [
             0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
             0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
         ]
+
+rounds = 10
         
 # Splits the file into blocks with 128 bits. Pads the file with 0s if it the number of bytes isn't a multipl of 16.
 def split_file(file):
@@ -65,15 +67,28 @@ def key_to_words(key):
         word_arr.append(key[4*i : 4*(i+1)])
     return word_arr
 
-inp = str.encode('thisissixteencha')
-print(inp)
-AES_KEY = random.getrandbits(128).to_bytes(16, byteorder = "little")
-print(AES_KEY)
+def one_round(textportion, key):
+    input = str.encode(textportion)
+    key = key.to_bytes(16, byteorder = "little")
+    blocks = 
+    for i in range(rounds):
+
+def encode(plaintext, key):
+    
+
+# inp = str.encode('thisissixteencha')
+# print(inp)
+# AES_KEY = random.getrandbits(128).to_bytes(16, byteorder = "little")
+# print(AES_KEY)
 round_key = xor(inp, AES_KEY)
 aftersub = bytesubstitution(round_key)
 state = toMatrix(aftersub)
 # print(state[0][0])
 print(state)
 print(round_key)
-key_to_words(round_key)
+nextkey = key_to_words(round_key)
+print(nextkey[0])
+g(nextkey[0])
+
+
 

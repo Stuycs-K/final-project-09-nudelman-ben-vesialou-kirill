@@ -47,7 +47,14 @@ if __name__ == "__main__":
         
         #now the client has to recieve information
         #send some information here
-        
+            
+        plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
+
+        AES_KEY = random.getrandbits(128)
+
+        encoded_arr = encode(plaintext, AES_KEY)
+
+        # print(AES_KEY)
 
         # close the connection after all the information is sent
         SENT = True
@@ -65,11 +72,3 @@ if __name__ == "__main__":
 
     else:
         print("ERROR, IMPROPER ARGUMENTS!")
-
-
-
-    plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
-
-    AES_KEY = random.getrandbits(16)
-
-    # print(AES_KEY)

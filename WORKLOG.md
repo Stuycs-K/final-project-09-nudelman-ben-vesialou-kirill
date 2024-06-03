@@ -28,6 +28,7 @@ Added more testing for byte substitution and revised byte substitution to work w
 
 ### 6/3
 
+Created two functions for splitting up the AES functions per round and for the general encoding process and keeping track of the round keys. Yet to complete it.
 
 ## Kirill Vesialou
 
