@@ -61,7 +61,7 @@ def mixColumns(matrix):
 
 print(mixColumns(testMatrix))
 
-testWord = 0x4D + 0x3F + 0x03 + 0x10
+testWords = [0x4D.to_bytes(4, byteorder = "little"), 0x3F.to_bytes(4, byteorder = "little"), 0x03.to_bytes(4, byteorder = "little"), 0x10.to_bytes(4, byteorder = "little")]
 
 def RC(roundNum):
     if roundNum == 0:
@@ -72,10 +72,14 @@ def RC(roundNum):
 def g(word, roundNum):
 
     # step 1
-    word = word[1:] + word[0]
+    print(word)
+    print(word[1:])
+    print(word[0: 1])
+    word = word[1:] + word[0: 1]
 
     # step 2
     newBytes = b''
+    print(type(word))
     for i, k in word:
         newBytes += SBOX[k].tobytes(1, byteorder = "little")
     
@@ -87,14 +91,15 @@ def g(word, roundNum):
     return word
 
 
-def keyExpansion(words):
-    w1 = xor(words[0], g(words[3]))
-    w2 = xor(w1, words[1])
-    w3 = xor(w2, words[2])
-    w4 = xor(w3, words[3])
+def keyExpansion(words, roundNumber):
+    print(words)
+    w1 = xor(words[0], g(words[3], roundNumber))
+    w2 = xor(w1.to_bytes(1, byteorder = "little"), words[1].to_bytes(1, byteorder = "little"))
+    w3 = xor(w2.to_bytes(1, byteorder = "little"), words[2].to_bytes(1, byteorder = "little"))
+    w4 = xor(w3.to_bytes(1, byteorder = "little"), words[3].to_bytes(1, byteorder = "little"))
     newKey = b''
     newKey += w1 + w2 + w3 + w4
     
     return newKey
 
-print(keyExpansion(testWord))
+print(keyExpansion(testWords, 1))
