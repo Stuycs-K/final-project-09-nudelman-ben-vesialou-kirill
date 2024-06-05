@@ -30,6 +30,10 @@ Added more testing for byte substitution and revised byte substitution to work w
 
 Created two functions for splitting up the AES functions per round and for the general encoding process and keeping track of the round keys. Yet to complete it.
 
+### 6/4 and 6/5
+
+Changed the structure of the encoding functions to make them one larger and more understandable function. Completed it, yet to complete testing. Took file name as input, converted it to array of 16 byte blocks and encrypted each block through ten rounds, appending it back to a large byte string after and returning it.
+
 ## Kirill Vesialou
 
 ### date x

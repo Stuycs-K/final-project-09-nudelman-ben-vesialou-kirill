@@ -67,28 +67,40 @@ def key_to_words(key):
         word_arr.append(key[4*i : 4*(i+1)])
     return word_arr
 
-def one_round(textportion, key):
-    input = str.encode(textportion)
+def encode(filename, key):
+    blocks = split_file(filename)
     key = key.to_bytes(16, byteorder = "little")
-    blocks = 
-    for i in range(rounds):
-
-def encode(plaintext, key):
+    encoded = b''
     
+    for i in range(blocks.len):
+        lastkey = key
+        laststate = blocks[i]
+        for i in range(rounds):
+            key = xor(laststate, last_key)
+            aftersub = bytesubstitution(after_key)
+            state = toMatrix(aftersub)
+            afterrows = rowShift(state)
+            aftercols = mixColumns(afterrows)
+            round_key = keyexpansion(key_to_words(lastkey), i)
+            lastkey = round_key
+            newstate = xor(aftercols, round_key) 
+            laststate = newstate
+        encoded += laststate
+    return encoded
 
 # inp = str.encode('thisissixteencha')
 # print(inp)
 # AES_KEY = random.getrandbits(128).to_bytes(16, byteorder = "little")
-# print(AES_KEY)
-round_key = xor(inp, AES_KEY)
-aftersub = bytesubstitution(round_key)
-state = toMatrix(aftersub)
-# print(state[0][0])
-print(state)
-print(round_key)
-nextkey = key_to_words(round_key)
-print(nextkey[0])
-g(nextkey[0])
+# # print(AES_KEY)
+# round_key = xor(inp, AES_KEY)
+# aftersub = bytesubstitution(round_key)
+# state = toMatrix(aftersub)
+# # print(state[0][0])
+# print(state)
+# print(round_key)
+# nextkey = key_to_words(round_key)
+# print(nextkey[0])
+# g(nextkey[0])
 
 
 
