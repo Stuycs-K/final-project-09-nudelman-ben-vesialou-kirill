@@ -40,7 +40,7 @@ def split_file(file):
     return blocks
 
 def xor(first, second):
-    encoded = bytes(a ^ b for a,b in zip(inp, key))
+    encoded = bytes(a ^ b for a,b in zip(first, second))
     return encoded
 
 testMatrix = [[0,1,2,3],[0,1,2,3],[0,1,2,3],[0,1,2,3]]
@@ -76,16 +76,20 @@ def g(word, roundNum):
     print(word[1:])
     print(word[0: 1])
     word = word[1:] + word[0: 1]
+    print(word)
 
     # step 2
     newBytes = b''
     print(type(word))
-    for i, k in word:
-        newBytes += SBOX[k].tobytes(1, byteorder = "little")
+    for i, k in enumerate(word):
+        newBytes += SBOX[k].to_bytes(1, byteorder = "little")
+        print(newBytes)
+    print(newBytes)
     
     # step 3
     roundConst = b''
-    roundConst += RC(roundNum) + 0x00 + 0x00 + 0x00
+    roundConst += (RC(roundNum)).to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little")
+    print(roundConst)
     word = xor(newBytes, roundConst)
 
     return word
@@ -94,9 +98,9 @@ def g(word, roundNum):
 def keyExpansion(words, roundNumber):
     print(words)
     w1 = xor(words[0], g(words[3], roundNumber))
-    w2 = xor(w1.to_bytes(1, byteorder = "little"), words[1].to_bytes(1, byteorder = "little"))
-    w3 = xor(w2.to_bytes(1, byteorder = "little"), words[2].to_bytes(1, byteorder = "little"))
-    w4 = xor(w3.to_bytes(1, byteorder = "little"), words[3].to_bytes(1, byteorder = "little"))
+    w2 = xor(w1, words[1])
+    w3 = xor(w2, words[2])
+    w4 = xor(w3, words[3])
     newKey = b''
     newKey += w1 + w2 + w3 + w4
     
