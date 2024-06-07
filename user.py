@@ -1,9 +1,9 @@
 import sys
 import socket
 import random
-import aes
+from aes import *
 
-port = 23451
+port = 23448
 
 #intialize a variable to keep track of whether all the file's information is sent yet
 # SENT = False
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         
         AES_KEY = random.getrandbits(128) #ideally it would not be random
 
-        encoded_text = encode(filename, AES_KEY)
+        encoded_text = encode(file_path, AES_KEY)
         # plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
 
         for i in range(len(encoded_text) / 16):

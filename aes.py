@@ -136,11 +136,11 @@ def encode(filename, key):
     key = key.to_bytes(16, byteorder = "little")
     encoded = b''
     
-    for i in range(blocks.len):
+    for i in range(len(blocks)):
         lastkey = key
         laststate = blocks[i]
         for i in range(rounds):
-            key = xor(laststate, last_key)
+            after_key = xor(laststate, lastkey)
             aftersub = bytesubstitution(after_key)
             state = toMatrix(aftersub)
             afterrows = rowShift(state)
