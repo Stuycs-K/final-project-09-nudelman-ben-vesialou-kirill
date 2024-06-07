@@ -34,6 +34,10 @@ Created two functions for splitting up the AES functions per round and for the g
 
 Changed the structure of the encoding functions to make them one larger and more understandable function. Completed it, yet to complete testing. Took file name as input, converted it to array of 16 byte blocks and encrypted each block through ten rounds, appending it back to a large byte string after and returning it.
 
+### 6/7
+
+Updated networking portion of the code so that the user inputs a filename and the properly encoded information is sent through the network.
+
 ## Kirill Vesialou
 
 ### date x

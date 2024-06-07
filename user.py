@@ -47,25 +47,36 @@ if __name__ == "__main__":
         
         #now the client has to recieve information
         #send some information here
-            
-        plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
+        
+        AES_KEY = random.getrandbits(128) #ideally it would not be random
 
-        AES_KEY = random.getrandbits(128)
+        encoded_text = encode(filename, AES_KEY)
+        # plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
 
-        encoded_arr = encode(plaintext, AES_KEY)
+        for i in range(len(encoded_text) / 16):
+            client_socket.send(encoded_text[16*i: 16 * (i + 1)])
+
+        client_socket.send(b'0' * 16)
+
+        # encoded_arr = encode(plaintext, AES_KEY)
 
         # print(AES_KEY)
 
         # close the connection after all the information is sent
-        SENT = True
+        # SENT = True
         client_socket.close()
         
     elif (sys.argv[1] == "-RECIEVE"):
         server_socket = server_setup()
-        while (not SENT):
+        recieved = b'a' * 16
+        zeroes = b'0' * 16
+        final = b''
+
+        client, address = server_socket.accept()
+        print ('established connection from', address )
+        while (recieved != (zeroes)):
             # establish connection when client connects
-            client, address = server_socket.accept()
-            print ('established connection from', address )
+            final += server_socket.recv(16)
 
         # Close the connection when all the required information is sent through the socket
         client.close()
