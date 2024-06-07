@@ -6,7 +6,7 @@ import aes
 port = 23451
 
 #intialize a variable to keep track of whether all the file's information is sent yet
-SENT = False
+# SENT = False
 
 def server_setup():
     # create a socket
