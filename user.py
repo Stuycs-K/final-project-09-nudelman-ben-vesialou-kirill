@@ -3,7 +3,7 @@ import socket
 import random
 from aes import *
 
-port = 23448
+port = 23446
 
 #intialize a variable to keep track of whether all the file's information is sent yet
 # SENT = False
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         encoded_text = encode(file_path, AES_KEY)
         # plaintext = "asdjhcakjsncksan" #ideally take information from a file by reading bytes / bits and put it into a string
 
-        for i in range(len(encoded_text) / 16):
+        for i in range(len(encoded_text) // 16):
             client_socket.send(encoded_text[16*i: 16 * (i + 1)])
 
         client_socket.send(b'0' * 16)
@@ -80,6 +80,7 @@ if __name__ == "__main__":
 
         # Close the connection when all the required information is sent through the socket
         client.close()
+        server_socket.close()
 
     else:
         print("ERROR, IMPROPER ARGUMENTS!")

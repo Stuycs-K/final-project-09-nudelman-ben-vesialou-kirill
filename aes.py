@@ -42,34 +42,60 @@ def split_file(file):
     return blocks
 
 def xor(first, second):
+    first = bytearray(first)
+    second = bytearray(second)
     encoded = bytes(a ^ b for a,b in zip(first, second))
     return encoded
 
 # testMatrix = [[0,1,2,3],[0,1,2,3],[0,1,2,3],[0,1,2,3]]
 
 def rowShift(matrix):
+    matrix = np.array(matrix, dtype=np.uint8)
     index = 1
     while index < 4:
-        matrix[index] = matrix[index][index:] + matrix[index][:index]
+        matrix[index] = np.roll(matrix[index], -index) #roll shifts over the last n elements to the front
         index += 1
     return matrix
 
 # print(rowShift(testMatrix))
 
 def mixColumns(matrix):
-    operationMatrix = np.array([[0x02, 0x03, 0x01, 0x01],[0x01,0x02,0x03,0x01],[0x01,0x01,0x02,0x03],[0x03,0x01,0x01,0x02]]).reshape(4,4)
-    output = operationMatrix @ matrix
+    matrix = np.array(matrix, dtype=np.uint8)
+    operationMatrix = np.array([[0x02, 0x03, 0x01, 0x01], [0x01, 0x02, 0x03, 0x01], [0x01, 0x01, 0x02, 0x03], [0x03, 0x01, 0x01, 0x02]], dtype=np.uint8)
+    output = np.zeros((4, 4), dtype=np.uint8)
+
+    for i in range(4):
+        for j in range(4):
+            output[i][j] = (galoismul(operationMatrix[i][0], matrix[0][j]) ^
+                            galoismul(operationMatrix[i][1], matrix[1][j]) ^
+                            galoismul(operationMatrix[i][2], matrix[2][j]) ^
+                            galoismul(operationMatrix[i][3], matrix[3][j]))
     return output
 
+def galoismul(first, second):
+    out = 0  
+    for i in range(8):  
+        if second & 1:  
+            out ^= first  
+        high = first & 0x80 
+        first <<= 1  
+        if high:  
+            first ^= 0x1b  #irreducible polynomial
+        second >>= 1  
+    return out
 # print(mixColumns(testMatrix))
 
 # testWords = [0x4D.to_bytes(4, byteorder = "little"), 0x3F.to_bytes(4, byteorder = "little"), 0x03.to_bytes(4, byteorder = "little"), 0x10.to_bytes(4, byteorder = "little")]
 
 def RC(roundNum):
-    if roundNum == 0:
-        return 0x01
-    else:
-        return 0x02 * RC(roundNum - 1)
+    constant = [0x8d]
+    a = 1
+    for k in range(1, roundNum + 1):
+        a = a << 1 #multiplication by 2 using bit shifting
+        if a & 0x100: #checks if a exceeds 8 byte
+            a ^= 0x11b #keeps a within the 8 byte length using bit modulus 
+        constant.append(a)
+    return constant[roundNum]
 
 def g(word, roundNum):
 
@@ -77,24 +103,19 @@ def g(word, roundNum):
     # print(word)
     # print(word[1:])
     # print(word[0: 1])
-    word = word[1:] + word[0: 1]
+    word = word[1:] + word[:1]
     # print(word)
-
+    
     # step 2
-    newBytes = b''
-    # print(type(word))
-    for i, k in enumerate(word):
-        newBytes += SBOX[k].to_bytes(1, byteorder = "little")
         # print(newBytes)
     # print(newBytes)
-    
+    newbytes = bytearray([SBOX[b] for b in word])
     # step 3
-    roundConst = b''
-    roundConst += (RC(roundNum)).to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little") + 0x00.to_bytes(1, byteorder = "little")
+    roundConst = RC(roundNum).to_bytes(1, byteorder="little") + b'\x00\x00\x00'
     # print(roundConst)
-    word = xor(newBytes, roundConst)
+    final = bytearray(a ^ b for a, b in zip(word, roundConst)) #the xor function but with byte array instead of bytes
 
-    return word
+    return final
 
 
 def keyExpansion(words, roundNumber):
@@ -110,12 +131,8 @@ def keyExpansion(words, roundNumber):
 
 # print(keyExpansion(testWords, 1))
 def toMatrix(string):
-    arr = []
-    while string:
-        arr.append(string[:1])
-        string = string[1:]
-    # print(arr)
-    matrix = np.array(arr).reshape((4,4)).T
+    arr = [int.from_bytes(string[i:i+1], byteorder='little') for i in range(len(string))]
+    matrix = np.array(arr, dtype=np.uint8).reshape((4, 4)).T
     # print(matrix)
     return matrix
 
@@ -145,7 +162,7 @@ def encode(filename, key):
             state = toMatrix(aftersub)
             afterrows = rowShift(state)
             aftercols = mixColumns(afterrows)
-            round_key = keyexpansion(key_to_words(lastkey), i)
+            round_key = keyExpansion(key_to_words(lastkey), i)
             lastkey = round_key
             newstate = xor(aftercols, round_key) 
             laststate = newstate
