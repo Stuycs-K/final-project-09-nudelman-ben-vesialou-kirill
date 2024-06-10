@@ -40,10 +40,38 @@ Updated networking portion of the code so that the user inputs a filename and th
 
 ## Kirill Vesialou
 
-### date x
+### 05/23
 
-info
+Researched the AES algorithm and found a source that could be used in order to understand each step of AES (https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture8.pdf).
 
-### date y
+### 5/24 and weekend
 
-info
+Read up to page 27 of the source that I found.
+
+### 5/28
+
+Wrote code meant to split up files into chunks of data (128 bits long).
+
+### 5/29 
+
+Read up to page 37 of the source that I found.
+
+### 5/30
+
+Read up to page 46 of the source that I found.
+
+### 5/31 and Weekend
+
+Wrote the functions for row shift and mix columns.
+
+### 6/3
+
+Worked on the key expansion function.
+
+### 6/4 and 6/5
+
+Worked on the key expansion function, and the g function that is used in the key expansion function.
+
+### 6/7
+
+Finished debugging the g function.

@@ -22,7 +22,7 @@ SBOX = [
 
 rounds = 10
         
-# Splits the file into blocks with 128 bits. Pads the file with 0s if it the number of bytes isn't a multipl of 16.
+# Splits the file into blocks with 128 bits. Pads the file with 0s if it the number of bytes isn't a multiple of 16.
 def split_file(file):
     blocks =[]
     with open(file, 'rb') as f:
