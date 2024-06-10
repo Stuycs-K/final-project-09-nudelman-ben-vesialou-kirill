@@ -2,6 +2,7 @@
 ### Group Info
 
 Benjamin Nudelman and Kirill Vesialou
+
 ### Overview
 
 Our project focused on the encryption portion of AES 128 and used networking to create a more real-life scenario or tool for the use of this encryption algorithm. Ultimately, a start and an end user both run commands in the terminal, with the start user inputting a file path and an ip address to connect to, and the user encoding the information within the file and sending it over to the end user.
@@ -10,10 +11,14 @@ Our project focused on the encryption portion of AES 128 and used networking to 
 
 The format in which the users run the program is with the following commands:
 
-python3 user.py -SEND FILENAME IP
+```python3 user.py -SEND FILENAME IP
+```
 
-python3 user.py -RECIEVE
+```python3 user.py -RECIEVE
+```
 
 ### Links
 
-https://docs.google.com/presentation/d/1AI8hnmHGH2ibZwiNcPsUuSHMpycGfp_10bsVOW5Ahbc/edit?usp=sharing
+[Slides](https://docs.google.com/presentation/d/1AI8hnmHGH2ibZwiNcPsUuSHMpycGfp_10bsVOW5Ahbc/edit?usp=sharing)
+
+[Video](https://drive.google.com/file/d/1e2E61WLRIPeCOk-9ApudGjfYwmxWj2YV/view?usp=sharing)
