@@ -11,10 +11,12 @@ Our project focused on the encryption portion of AES 128 and used networking to 
 
 The format in which the users run the program is with the following commands:
 
-```python3 user.py -SEND FILENAME IP
+```
+python3 user.py -SEND FILENAME IP
 ```
 
-```python3 user.py -RECIEVE
+```
+python3 user.py -RECIEVE
 ```
 
 ### Links
