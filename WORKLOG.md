@@ -38,6 +38,10 @@ Changed the structure of the encoding functions to make them one larger and more
 
 Updated networking portion of the code so that the user inputs a filename and the properly encoded information is sent through the network.
 
+### 6/8 and 6/9
+
+Fixed many of the functions to properly store bytes and byte arrays instead of ints, and fixed the broken socket issue in the networking.
+
 ## Kirill Vesialou
 
 ### 05/23
